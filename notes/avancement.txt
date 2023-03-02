@@ -1,0 +1,46 @@
+
+-> Recherche : 
+OK vérifier que ça marche bien avec la barre de recherche et les filtres
+OK Saisie assitée lieux rechercheveent 
+OK Afficher que ceux qui Date > Date auj
+
+-> Détail activité : 
+OK si pas Physique
+PT X Partager l'activité
+
+-> Formattage : 
+PT X Centraliser l'url serveur
+PT X Centraliser les couleurs de l'appli (3 ou 4 nuances)
+
+-> Inscription : 
+OK Vérifier que le mail existe pas déjà
+OK Mot de passe - de 16 ?
+PT X Hobbies ?
+
+-> Créer activité :
+OK Recherche assist lieux
+
+-> Amitié :
+PT X Ajouter une demande d'ami
+
+-> Modifier profil : 
+X changer le mdp 
+X -> mdp oublié (mail)
+
+-> Messages : 
+X bulles photo profil
+X sécuriser les channels
+X Utiliser des UUIDs -> pas finit (faire users)
+
+-> Photo de profil : 
+PT X taille max : compresser
+
+-> Limiter les rows renvoyées 
+X map, notifications....
+
+-> Map : 
+PT X afficher les icones selon le zoom
+
+-> Sécurité : 
+X Anti injection SQL concaténation
+X revérifier/vérifier infos inscription/changement profil/activités... coté serveur

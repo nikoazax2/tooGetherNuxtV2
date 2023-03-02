@@ -1,0 +1,31 @@
+back : nest + phpmyadmin
+front : NuxtJS
+-----------------------------------------
+SERVEUR :
+HOSTINGER
+SSH 
+89.116.228.185
+root
+
+2 FOLDERS :
+tooGetherBack :
+update :
+git pull -> si bug git reset --hard
+yarn build && yarn generate
+
+Lancer le serveur 
+se placer dans le folder tooGetherBack
+-> pm2 start node dist/main.js
+
+tooGetherFront :
+update :
+yarn build && yarn generate en local 
+SFTP : déposer le dist dans /var/www/html
+
+------------------------------------------
+LANCER SERVEUR LOCAL DEV
+back : 
+lancer serv  : npm run start dev
+
+front : 
+lancer serv : yarn run dev

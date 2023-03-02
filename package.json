@@ -1,0 +1,31 @@
+{
+  "name": "tooGetherNuxt",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/auth-next": "5.0.0-1622918202.e815752",
+    "@nuxtjs/axios": "^5.13.6",
+    "@nuxtjs/dotenv": "^1.4.1",
+    "@nuxtjs/proxy": "^2.1.0",
+    "core-js": "^3.9.1",
+    "cors": "^2.8.5",
+    "dateformat": "^5.0.3",
+    "dotenv": "^10.0.0",
+    "mapbox-gl": "^2.5.1",
+    "nuxt": "^2.15.3",
+    "vue-mapbox": "^0.4.1",
+    "vue-places": "^2.2.2",
+    "vue2-google-maps": "^0.10.7",
+    "vuelayers": "^0.11.36"
+  },
+  "devDependencies": {
+    "@nuxtjs/router": "^1.6.1",
+    "@nuxtjs/vuetify": "^1.11.3"
+  }
+}

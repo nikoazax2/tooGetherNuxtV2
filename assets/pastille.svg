@@ -1,0 +1,45 @@
+<svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="23"
+          height="22"
+          viewBox="0 0 23 22"
+        >
+          <g
+            id="Groupe_67"
+            data-name="Groupe 67"
+            transform="translate(-661.38 -274.793)"
+          >
+            <rect
+              id="Rectangle_17"
+              data-name="Rectangle 17"
+              width="23"
+              height="22"
+              rx="11"
+              transform="translate(661.38 274.793)"
+              fill="#fff"
+            />
+            <g
+              id="Ellipse_21"
+              data-name="Ellipse 21"
+              transform="translate(667.842 280.757)"
+              fill="#e92626"
+              stroke="#fff"
+              stroke-width="1"
+            >
+              <ellipse
+                cx="5.038"
+                cy="5.025"
+                rx="5.038"
+                ry="5.025"
+                stroke="none"
+              />
+              <ellipse
+                cx="5.038"
+                cy="5.025"
+                rx="4.538"
+                ry="4.525"
+                fill="none"
+              />
+            </g>
+          </g>
+        </svg>

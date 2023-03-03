@@ -27,14 +27,13 @@ export default {
         },
         bas:{
             type: Boolean,
-            default: true
+            default: false
         },
     }
 }
 </script>
 <style lang="scss" scoped>
-.container-degouline{
-    height: 3vh;
+.container-degouline{ 
     .degouline{
         width: 100%;
         height: 349px;
@@ -64,7 +63,7 @@ export default {
         color: white;
         justify-content: center;
         text-align: center;
-        top: 100px;
+        top: 125px;
         .titre{
             font-weight: 600;
             font-size: 22px;

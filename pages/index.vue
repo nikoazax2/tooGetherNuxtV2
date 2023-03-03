@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <accueil v-if="mobile" />
+        <nuxt v-if="mobile"/>  
         <div class="ordi" v-else>
             <div class="texte">
                 Désolé,
@@ -11,33 +11,36 @@
                 <img src="@/assets/TooGetherPlanet.gif" />
             </div>
         </div>
+        <footersite></footersite> 
     </v-app>
 </template>
 
 <script>
-import accueil from '@/pages/acceuil.vue'
+import home from '@/pages/home.vue'
+import footersite from '@/components/footer.vue' 
 export default {
     name: 'App',
     components: {
-        accueil: accueil
+        accueil: accueil,
+        footersite: footersite
     },
     data() {
         return {
             mobile: false
         }
     },
-    created() {
+    created() { 
+        
         if (window.matchMedia('(max-width: 767px)').matches) {
             this.mobile = true
         }
         this.loadUserCo()
     },
     methods: {
-      async loadUserCo(){
-           this.$var = await this.$auth;
-      }
-    },
-    
+        async loadUserCo() {
+            this.$var = await this.$auth
+        }
+    }
 }
 </script>
 
@@ -46,10 +49,18 @@ export default {
 * {
     font-family: 'Noto Sans', sans-serif;
 }
+.btn-arrow-rounded {
+    padding: 0 5px 0 10px !important;
+    .v-btn__content{ 
+        font-size: 11px;
+        font-weight: 700;
+        opacity: 0.9;
+    } 
+}
 </style>
 
 <style lang="scss" scoped>
-.ordi { 
+.ordi {
     display: flex;
     justify-content: center;
     align-items: center;

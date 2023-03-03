@@ -1,20 +1,18 @@
 <template>
-    <div class="acceuil">
-        <headerDegouline :planet="false" :texte="true"></headerDegouline>
-
-        <!-- Connecté -->
-        <div class="connected"></div>
-        <!-- PAs Connecté -->
-        <div class="not-connected"></div>
+    <div class="listeevent">
+        <headerDegouline :planet="false"></headerDegouline>
+ 
     </div>
 </template>
 
 <script>
 import headerDegouline from '../components/headerDegouline.vue'
+import barreRecherche from '../components/barreRecherche.vue'
 export default {
     name: 'App',
     components: {
-        headerDegouline
+        headerDegouline,
+        barreRecherche
     },
     created: function () {},
     data: function () {
@@ -24,5 +22,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.listeevent { }
 </style>
  

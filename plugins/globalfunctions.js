@@ -8,7 +8,11 @@ Vue.use(VueGoogleMaps, {
 });
 
 Vue.prototype.$var = {
-    test:""
+    recherche:{
+        activite:'',
+        lieux:'',
+        date:''
+    }
 }
 
 Vue.prototype.$globalfunctions =  {

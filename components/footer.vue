@@ -12,16 +12,16 @@
             <div class="myevents" :class="{ selected: routePos == '/myevents' }" @click="goto('/myevents')">
                 <v-icon> mdi-account-cowboy-hat </v-icon>
             </div>
-            <div class="acceuil" :class="{ selected: routePos == '/' }" @click="goto('/')">
+            <div class="acceuil" :class="{ selected: routePos == '/acceuil' }" @click="goto('/')">
                 <v-icon> mdi-home </v-icon>
             </div>
 
             <div
                 class="recherche"
                 :class="{
-                    selected: routePos.includes('liste-event')
+                    selected: routePos.includes('liste-events')
                 }"
-                @click="goto('/liste-event')">
+                @click="goto('/liste-events')">
                 <v-icon> mdi-search-web </v-icon>
             </div>
 

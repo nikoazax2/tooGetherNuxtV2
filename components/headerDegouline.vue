@@ -1,7 +1,14 @@
 <template>
     <div class="container-degouline">
         <div class="degouline" :class="bas ? 'bas' : ''"></div>
-        
+
+         <div class="conteneur-planet conteneur-planet-left" v-if="planetLeft">
+            <img
+                class="planet-tourne"
+                style="position: absolute"
+                src="@/assets/planetquitournerouge.gif" />
+        </div>
+
         <div class="conteneur-planet" v-if="planet">
             <img
                 class="planet-tourne"
@@ -20,6 +27,10 @@ export default {
         planet: {
             type: Boolean,
             default: true
+        },
+        planetLeft: {
+            type: Boolean,
+            default: false
         },
         texte:{
             type: Boolean,
@@ -53,6 +64,13 @@ export default {
         left: 50vw;
         .planet-tourne{
             width: 33vw!important;
+        }
+    }
+    .conteneur-planet-left{
+        left: 8vw;
+        top: 5vh;
+        .planet-tourne{
+            width: 50vw!important;
         }
     }
     .titrecard{

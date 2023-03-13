@@ -54,8 +54,7 @@ export default {
                 return this.placeHoldersListe.date[Math.floor(Math.random() * this.placeHoldersListe.date.length)]
             }
         },
-        recherche() {
-            console.log(this.$var)
+        recherche() { 
         }
     }
 }
@@ -70,7 +69,7 @@ export default {
     z-index: 100;
     width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: center;    
     ::v-deep label {
         font-size: 14px;
         margin-top: -2px;
@@ -80,21 +79,27 @@ export default {
     }
     ::v-deep .v-input__slot {
         box-shadow: none !important;
+        background-color: rgba(255, 255, 255, 0)!important;
+        padding-right: 0!important;
     }
     .container-all {
+        background-color: rgba(255, 255, 255, 0.8);
         padding-right: 3px;
         box-shadow: 0px 0px 16px -3px rgb(0 0 0 / 25%);
         width: 93vw;
         display: inline-flex;
-        align-items: center;
-        background-color: white;
+        align-items: center; 
         border-radius: 20px;
         justify-content: space-between;
         .container-champ {
             width: 100%;
             .champ {
+                ::v-deep .v-input__control{
+                    border-radius: 100%;
+                }
             }
         }
+        .pastille{}
     }
 }
 </style>

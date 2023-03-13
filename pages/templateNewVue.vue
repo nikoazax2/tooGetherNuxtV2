@@ -1,5 +1,5 @@
 <template>
-    <div class="listeevent">
+    <div class="leTemplate">
         <headerDegouline :planet="false"></headerDegouline> 
     </div>
 </template>
@@ -8,9 +8,8 @@
 import headerDegouline from '../components/headerDegouline.vue'
 import barreRecherche from '../components/barreRecherche.vue'
 export default {
-    name: 'App',
+    name: 'leTemplate',
     props:{
-         test: { type: Function }, 
     },
     components: {
         headerDegouline,
@@ -19,8 +18,7 @@ export default {
     created() {
     },
     mounted(){
-        this.parent = this.$parent.$parent.$parent 
-        this.parent.leadActivities()
+        this.parent = this.$parent.$parent.$parent
     },
     data: function () {
         return {
@@ -31,7 +29,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.listeevent { 
+.leTemplate { 
     
 }
 </style>

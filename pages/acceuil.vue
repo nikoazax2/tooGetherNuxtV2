@@ -4,9 +4,16 @@
 
         <div class="header">
             <div class="header-gauche">
-                <div class="not-connected-btn">
-                    <v-btn text dark small>Connexion</v-btn>
-                    <v-btn text dark small>Inscription</v-btn>
+                <div class="non-connecte" v-if="!$auth.user">
+                    <div class="not-connected-btn">
+                        <v-btn text dark small @click="parent.goto('login')">Connexion</v-btn>
+                        <v-btn text dark small>Inscription</v-btn>
+                    </div>
+                </div>
+                <div class="connected" v-else>
+                    <div class="profile-photo">
+                        <img height="50px" :src="parent.profilePhoto($auth.user)" alt="">
+                    </div>                    
                 </div>
             </div>
             <div class="header-droite">
@@ -71,9 +78,13 @@ export default {
         headerDegouline,
         barreRecherche
     },
-    created: function () {},
+    created: function () {
+        this.parent = this.$parent.$parent.$parent 
+    },
     data: function () {
-        return {}
+        return {
+            parent:null
+        }
     }
 }
 </script>
@@ -89,6 +100,13 @@ export default {
         .header-gauche {
             display: flex;
             align-items: center;
+        }
+        .connected{
+            .profile-photo{
+                position: absolute;
+                top:0;
+                margin: 10px 0 0 20px;
+            }
         }
     }
     .not-connected-btn {

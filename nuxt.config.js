@@ -29,14 +29,18 @@ export default {
         extendRoutes(routes, resolve) {
             routes.push({
                 name: 'liste-event',
-                path: '/liste-events', 
+                path: '/liste-events',
                 component: resolve(__dirname, 'pages/listeevents.vue')
             },
-            {
-                name: 'acceuil',
-                path: '/',
-                component: resolve(__dirname, 'pages/acceuil.vue')
-              })
+                {
+                    name: 'acceuil',
+                    path: '/',
+                    component: resolve(__dirname, 'pages/acceuil.vue')
+                }, {
+                name: 'detailactivite',
+                path: '/detailactivite/:id',
+                component: resolve(__dirname, 'pages/detailactivite.vue')
+            })
         }
     },
 

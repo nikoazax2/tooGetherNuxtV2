@@ -1,23 +1,32 @@
 <template>
     <div class="acceuil">
-        <headerDegouline :planet="false" :texte="true" :bas="true"></headerDegouline>
+        <headerDegouline :planet="false" :texte="true" :bas="0"></headerDegouline>
 
         <div class="header">
             <div class="header-gauche">
                 <div class="non-connecte" v-if="!$auth.user">
                     <div class="not-connected-btn">
                         <v-btn text dark small @click="parent.goto('login')">Connexion</v-btn>
-                        <v-btn text dark small>Inscription</v-btn>
+                        <v-btn text dark small @click="parent.goto('register')">Inscription</v-btn>
                     </div>
                 </div>
-                <div class="connected" v-else>
-                    <div class="profile-photo">
-                        <img height="50px" :src="parent.profilePhoto($auth.user)" alt="">
-                    </div>                    
+                <div class="connected" v-else-if="this.$auth.user.avatar || this.$auth.user.profileImageBlob">
+                    <div class="photo-profile">
+                        <img
+                            height="50px"
+                            width="50px"
+                            :src="this.$auth.user.avatar || this.$auth.user.profileImageBlob"
+                            @click="parent.menuBurger = true" />
+                    </div>
                 </div>
             </div>
             <div class="header-droite">
-                <v-btn class="btn-arrow-rounded" elevation="0" rounded color="white">
+                <v-btn
+                    @click="$auth.user ? parent.goto('/create') : parent.goto('/login')"
+                    class="btn-arrow-rounded"
+                    elevation="0"
+                    rounded
+                    color="white">
                     Créer une activité &nbsp;
                     <v-btn color="#e92322" width="25" height="25" elevation="0" x-small fab>
                         <v-icon color="white" size="25"> mdi-chevron-right </v-icon>
@@ -65,7 +74,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 </template>
 
@@ -79,11 +87,25 @@ export default {
         barreRecherche
     },
     created: function () {
-        this.parent = this.$parent.$parent.$parent 
+        this.parent = this.$parent.$parent.$parent
+        setTimeout(() => {
+            this.$forceUpdate()
+        }, 2000)
     },
     data: function () {
         return {
-            parent:null
+            parent: null
+        }
+    },
+    methods: {
+        getPhotoProfile() {
+            if (this.$auth.user.avatar) {
+                return this.$auth.user.avatar
+            } else if (this.$auth.user.profileImageBlob) {
+                return this.$auth.user.profileImageBlob
+            } else {
+                return false
+            }
         }
     }
 }
@@ -101,10 +123,10 @@ export default {
             display: flex;
             align-items: center;
         }
-        .connected{
-            .profile-photo{
+        .connected {
+            .profile-photo {
                 position: absolute;
-                top:0;
+                top: 0;
                 margin: 10px 0 0 20px;
             }
         }
@@ -154,10 +176,10 @@ export default {
             }
         }
     }
-    .planet-img-container{
+    .planet-img-container {
         position: absolute;
         bottom: 480px;
-        img{
+        img {
             height: 100vw;
         }
     }

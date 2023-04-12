@@ -10,9 +10,9 @@
                 <v-icon> mdi-account-group </v-icon>
             </div>
             <div class="myevents" :class="{ selected: routePos == '/myevents' }" @click="goto('/myevents')">
-                <v-icon> mdi-account-cowboy-hat </v-icon>
+                <v-icon> mdi-clipboard-text-clock </v-icon>
             </div>
-            <div class="acceuil" :class="{ selected: routePos == '/acceuil' }" @click="goto('/')">
+            <div class="acceuil" :class="{ selected: routePos == '/acceuil' }" @click="goto('/acceuil')">
                 <v-icon> mdi-home </v-icon>
             </div>
 
@@ -39,7 +39,7 @@ export default {
             routePos: ''
         }
     },
-    mounted: function () {
+    created() {
         this.routePos = this.$route.path
     },
     methods: {
@@ -47,7 +47,11 @@ export default {
             this.$router.push(route)
         }
     },
-    watch: {}
+    watch: {
+        $route(to, from) {
+            this.routePos = this.$route.path
+        }
+    }
 }
 </script>
 <style lang="scss">

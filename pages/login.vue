@@ -1,6 +1,6 @@
 <template>
     <div class="login">
-        <headerDegouline :planetLeft="true" :bas="true" :texte="true" :planet="false"></headerDegouline>
+        <headerDegouline :planetLeft="true" :bas="0" :texte="true" :planet="false"></headerDegouline>
         <div class="formulaire">
             <div class="champs">
                 <v-text-field solo v-model="form.email" label="E-mail" class="input-text" dense hide-details="true">
@@ -27,12 +27,12 @@
                 <div class="text mdp-oublie">Mot de passe oublié</div>
             </div>
             <div class="boutons">
-                <v-btn class="btn-long plein" elevation="0" dark color="#e92626" rounded @click="connexion()"
-                    >Se connecter</v-btn
-                >
-                <v-btn class="btn-long vide" outlined color="#e92626" rounded @click="parent.goto('register')"
-                    >Créer un compte</v-btn
-                >
+                <v-btn class="btn-long plein" elevation="0" dark color="#e92626" rounded @click="connexion()">
+                    Se connecter
+                </v-btn>
+                <v-btn class="btn-long vide" outlined color="#e92626" rounded @click="parent.goto('register')">
+                    Créer un compte
+                </v-btn>
             </div>
         </div>
     </div>

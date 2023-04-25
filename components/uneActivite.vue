@@ -24,12 +24,21 @@
             <div class="adresse">{{ activite.lieux }}</div>
         </div>
         <div class="droite partie">
-            <div class="titre small-bold">Participant{{ activite.users.length > 1 ? 's' : '' }}</div>
-            <div class="photos">
-                <div v-for="user in activite.users.slice(0, 19)" class="photo-small-view">
-                    <img v-if="user.avatar || user.profileImageBlob" :src="user.avatar || user.profileImageBlob" />
+            <div>
+                <div class="titre small-bold">
+                    Participant{{ activite.users.length > 1 ? 's' : '' }}
+                    <v-icon
+                        v-if="this.$route.name == 'myevents'"
+                        @click.stop="parent.goto(`chat?actId=${activite.uuid}`)">
+                        mdi-forum-outline
+                    </v-icon>
                 </div>
-                <div v-if="activite.users.length > 19">+{{ activite.users.length - 19 }}</div>
+                <div class="photos">
+                    <div v-for="user in activite.users.slice(0, 19)" class="photo-small-view">
+                        <img v-if="user.avatar || user.profileImageBlob" :src="user.avatar || user.profileImageBlob" />
+                    </div>
+                    <div v-if="activite.users.length > 19">+{{ activite.users.length - 19 }}</div>
+                </div>
             </div>
         </div>
     </div>
@@ -41,7 +50,8 @@ import 'mapbox-gl/dist/mapbox-gl.css'
 export default {
     name: 'uneActivite',
     props: {
-        activite: Object
+        activite: Object,
+        chat: { type: Boolean, default: false }
     },
     components: {
         MglMap,
@@ -107,7 +117,7 @@ export default {
             font-size: 10px;
         }
         .desc {
-            height: 50px; 
+            height: 50px;
             max-width: 100%;
             font-size: 10px;
             display: inline-block;

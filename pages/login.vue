@@ -59,6 +59,9 @@ export default {
                     data: this.form
                 })
                 this.$router.push('/')
+                setTimeout(() => {
+                    document.location.reload()
+                }, 1000);
             } catch (err) {
                 if (err) {
                     this.error = true

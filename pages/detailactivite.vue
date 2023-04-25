@@ -24,7 +24,7 @@
             <div class="titre-page">Participants</div>
             <div class="participants">
                 <div class="participant" v-for="participant in parent.activity.users">
-                    <div class="photo-profile">
+                    <div class="photo-profile" @click="parent.goto(`/profile?id=${participant.uuid}`)">
                         <img
                             height="50px"
                             width="50px"

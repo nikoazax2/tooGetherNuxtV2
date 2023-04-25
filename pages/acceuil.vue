@@ -32,6 +32,7 @@
                         <v-icon color="white" size="25"> mdi-chevron-right </v-icon>
                     </v-btn>
                 </v-btn>
+                <v-icon dark class="cloche-notif">mdi-bell</v-icon>
             </div>
         </div>
 
@@ -40,6 +41,7 @@
         <div class="planet-img-container">
             <img class="planet-img" style="position: absolute" src="@/assets/TooGetherPlanet.gif" />
         </div>
+
         <div class="chiffres">
             <div class="ligne haut">
                 <div class="bloc deux">
@@ -122,6 +124,17 @@ export default {
         .header-gauche {
             display: flex;
             align-items: center;
+        }
+        .header-droite {
+            display: flex;
+            flex-direction: column;
+            justify-content: end;
+            .cloche-notif {
+                position: absolute;
+                top: 80px;
+                right: 15px;
+                justify-content: end; 
+            }
         }
         .connected {
             .profile-photo {

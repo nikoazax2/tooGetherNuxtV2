@@ -27,20 +27,28 @@ export default {
     },
     router: {
         extendRoutes(routes, resolve) {
-            routes.push({
-                name: 'liste-event',
-                path: '/liste-events',
-                component: resolve(__dirname, 'pages/listeevents.vue')
-            },
+            routes.push(
+                {
+                    name: 'liste-event',
+                    path: '/liste-events',
+                    component: resolve(__dirname, 'pages/listeevents.vue')
+                },
                 {
                     name: 'acceuil',
                     path: '/',
                     component: resolve(__dirname, 'pages/acceuil.vue')
-                }, {
-                name: 'detailactivite',
-                path: '/detailactivite/:id',
-                component: resolve(__dirname, 'pages/detailactivite.vue')
-            })
+                },
+                {
+                    name: 'detailactivite',
+                    path: '/detailactivite/:id',
+                    component: resolve(__dirname, 'pages/detailactivite.vue')
+                },
+                {
+                    name: 'profile',
+                    path: '/profile/:uuid',
+                    component: resolve(__dirname, 'pages/profile.vue')
+                }
+            )
         }
     },
 

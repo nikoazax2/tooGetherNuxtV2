@@ -18,7 +18,7 @@
             <v-list nav dense>
                 <v-list-item-group active-class="deep-purple--text text--accent-4">
                     <v-list-item v-if="$auth.user">
-                        <v-list-item-title @click="goto('/profile')">Profil</v-list-item-title>
+                        <v-list-item-title @click="goto(`/profile?id=${$auth.user.uuid}`)">Profil</v-list-item-title>
                     </v-list-item>
                     <v-list-item v-if="$auth.user">
                         <v-list-item-title @click.prevent="signOut">Déconnexion</v-list-item-title>
@@ -72,18 +72,31 @@ export default {
         this.$var.loading = false
     },
     methods: {
-        async getProfileImage(user) {
-            if (user.profileImage != null) {
-                await this.$axios
-                    .get('users/profileImage/' + user.profileImage, {
+        async addFriend(id1, id2) {
+            this.$axios
+                .post(`users/addFriend`, {
+                    idUser: id1,
+                    idFriend: id2
+                })
+                .then((response) => {
+                    document.location.reload()
+                })
+        },
+        async getProfileImage(user,nameVar = 'profileImage') {
+            let image = null
+            if (user[nameVar] != null) {
+                image = await this.$axios
+                    .get('users/profileImage/' + user[nameVar], {
                         responseType: 'arraybuffer'
                     })
                     .then((response) => {
                         user.profileImageBlob =
                             'data:image/jpeg;base64,' +
                             Buffer.from(response.data, 'binary').toString('base64').replaceAll(' ', '')
+                        return user.profileImageBlob
                     })
             }
+            return image
         },
         dateFormatee(date) {
             date = new Date(date)
@@ -129,15 +142,30 @@ export default {
             this.chargement = false
             return
         },
-        async loadActivities() { 
+        async loadActivitiesByUser(id) {
+            this.chargement = true
+            this.imgLoad = true  
+            let res = await this.$axios.get(`/activities/${id}/participant`) 
+            this.activites = res.data
+            this.activites.forEach((activite) => {
+                activite.coordlieux = JSON.parse(activite.coordlieux) 
+                activite.users.forEach((user, index) => {
+                    this.getProfileImage(user)
+                    if (index == activite.users.length - 1) {
+                        this.imgLoad = false
+                    }
+                })
+            })
+            this.chargement = false
+        },
+        async loadActivities() {
             this.chargement = true
             this.imgLoad = true
             let queryParamName = `${this.recherche.activite ? `/${this.recherche.activite}` : '/null'}${
                 this.recherche.lieux ? `/${this.recherche.lieux}` : '/null'
             }${this.recherche.date ? `/${this.recherche.date}` : '/null'}`
 
-            let res = await this.$axios.get('/activities' + queryParamName + '/recherche').then()
-
+            let res = await this.$axios.get('/activities' + queryParamName + '/recherche')  
             this.activites = res.data
             this.activites.forEach((activite) => {
                 activite.coordlieux = JSON.parse(activite.coordlieux)

@@ -2,7 +2,7 @@
     <div class="Friends">
         <headerDegouline :planet="true"></headerDegouline>
         <div class="body">
-            <div class="titre-page">AMIS</div>
+            <div class="titre-page">MES AMIS</div>
         </div>
     </div>
 </template>
@@ -20,6 +20,8 @@ export default {
     created() {},
     mounted() {
         this.parent = this.$parent.$parent.$parent
+        if (this.$auth.user) console.log('loadFriends')
+        else this.parent.goto('login')
     },
     data: function () {
         return {

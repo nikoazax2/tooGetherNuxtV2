@@ -50,6 +50,9 @@ export default {
             activity: null,
             chargement: false,
             imgLoad: true,
+            pdpLoad: true,
+            friends: [],
+            detailUser:null,
             recherche: {
                 activite: '',
                 lieux: '',
@@ -82,7 +85,8 @@ export default {
                     document.location.reload()
                 })
         },
-        async getProfileImage(user,nameVar = 'profileImage') {
+        async getProfileImage(user, nameVar = 'profileImage') {
+            this.pdpLoad = true
             let image = null
             if (user[nameVar] != null) {
                 image = await this.$axios
@@ -93,6 +97,7 @@ export default {
                         user.profileImageBlob =
                             'data:image/jpeg;base64,' +
                             Buffer.from(response.data, 'binary').toString('base64').replaceAll(' ', '')
+                        this.pdpLoad = false
                         return user.profileImageBlob
                     })
             }
@@ -122,6 +127,16 @@ export default {
                 this.menuBurger = false
             }
         },
+        async loadDetailUser(uuid) {
+            this.loading = true
+            let res = await this.$axios.get(`${process.env.URL}/users/getprofile/${uuid}`).then((user) => {
+                this.detailUser = user.data[0]
+                this.getProfileImage(this.detailUser).then((data) => {
+                    this.loading = false
+                    this.detailUser.profileImageBlob = data
+                })
+            })
+        },
         async loadActivity() {
             let res = await this.$axios.get('/activities/' + this.$route.query.id + '/detail')
             this.activity = res.data
@@ -132,7 +147,7 @@ export default {
                 this.activity.users.forEach((participant) => {
                     this.getProfileImage(participant)
                     if (this.$auth.user) {
-                        if (participant.id == this.$auth.user.id) {
+                        if (participant.uuid == this.$auth.user.uuid) {
                             this.inscrit = true
                         }
                     }
@@ -144,17 +159,29 @@ export default {
         },
         async loadActivitiesByUser(id) {
             this.chargement = true
-            this.imgLoad = true  
-            let res = await this.$axios.get(`/activities/${id}/participant`) 
+            this.imgLoad = true
+            let res = await this.$axios.get(`/activities/${id}/participant`)
             this.activites = res.data
             this.activites.forEach((activite) => {
-                activite.coordlieux = JSON.parse(activite.coordlieux) 
+                activite.coordlieux = JSON.parse(activite.coordlieux)
                 activite.users.forEach((user, index) => {
                     this.getProfileImage(user)
                     if (index == activite.users.length - 1) {
                         this.imgLoad = false
                     }
                 })
+            })
+            this.chargement = false
+        },
+        async loadFriends(uuid) {
+            this.chargement = true
+            let res = await this.$axios.get(`/users/getFriends/${uuid}`)
+            this.friends = res.data
+            this.friends.forEach((user, index) => {
+                this.getProfileImage(user)
+                if (index == this.friends.length - 1) {
+                    this.imgLoad = false
+                }
             })
             this.chargement = false
         },
@@ -165,7 +192,7 @@ export default {
                 this.recherche.lieux ? `/${this.recherche.lieux}` : '/null'
             }${this.recherche.date ? `/${this.recherche.date}` : '/null'}`
 
-            let res = await this.$axios.get('/activities' + queryParamName + '/recherche')  
+            let res = await this.$axios.get('/activities' + queryParamName + '/recherche')
             this.activites = res.data
             this.activites.forEach((activite) => {
                 activite.coordlieux = JSON.parse(activite.coordlieux)
@@ -290,6 +317,12 @@ export default {
     position: absolute;
     top: 20px;
     left: 20px;
+    display: flex;
+    justify-content: center;
+    border-radius: 100%;
+    overflow: hidden;
+}
+.photo-profile-libre {
     display: flex;
     justify-content: center;
     border-radius: 100%;

@@ -1,7 +1,7 @@
 <template>
     <div class="uneActivite">
         <div class="gauche partie">
-            <div class="nom small-bold">{{ activite.name }}</div>
+            <div class="nom small-bold">{{ activite.name }} </div>
             <div class="desc small-bold">{{ activite.description }}</div>
             <div class="date small-bold">{{ parent.dateFormatee(activite.date) }}</div>
         </div>
@@ -16,7 +16,7 @@
                     :mapStyle.sync="$var.mapStyle">
                     <MglMarker :coordinates="[activite.coordlieux.lng, activite.coordlieux.lat]">
                         <div slot="marker" class="marker-map">
-                            <code class="emojiMap" v-html="'<p>&\#x1F' + activite.emoji + ';</p>'"></code>
+                            <code class="emojiMap" v-html="'<p>&\#x1F' + activite.emoji + ';</p>'"/>
                         </div>
                     </MglMarker>
                 </MglMap>
@@ -29,7 +29,7 @@
                     Participant{{ activite.users.length > 1 ? 's' : '' }}
                     <v-icon
                         v-if="this.$route.name == 'myevents'"
-                        @click.stop="parent.goto(`chat?actId=${activite.uuid}`)">
+                        @click.stop="parent.goto(`chat?id=${activite.uuid}`)">
                         mdi-forum-outline
                     </v-icon>
                 </div>

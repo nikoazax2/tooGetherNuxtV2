@@ -1,5 +1,5 @@
 <template>
-    <div class="create">
+    <div class="create" v-if="!loading">
         <headerDegouline :planet="true"></headerDegouline>
         <div class="choix-emoji">
             <v-menu v-model="menuChoixEmoji" content-class="menu-emoji" :close-on-content-click="false">
@@ -18,7 +18,7 @@
             </v-menu>
         </div>
         <div class="corp">
-            <div class="titre-page">CREER UNE ACTIVITÉ</div>
+            <div class="titre-page">{{ editing ? 'MODIFIER' : 'CREER' }} UNE ACTIVITÉ</div>
             <div class="form">
                 <!-- NOM -->
                 <div class="emoji-input">
@@ -68,7 +68,7 @@
                     </div>
                     <div class="place-input" v-if="isPhysics">
                         <img class="pastille" src="@/assets/pastille.svg" alt="pastille" />
-                        <GmapAutocomplete placeholder="Lieu" @place_changed="chargeMap" />
+                        <GmapAutocomplete :value="defaultValueLieux" placeholder="Lieu" @place_changed="chargeMap" />
                     </div>
                     <div v-else>
                         <v-text-field
@@ -127,7 +127,7 @@
                         locale="fr-FR"
                         v-model="form.date"
                         full-width />
-                </v-menu>
+                </v-menu> 
                 <!-- HEURE  -->
                 <v-text-field
                     @click="hourMenu = true"
@@ -160,8 +160,14 @@
                     </template>
                 </v-text-field>
                 <div class="btn-valider">
-                    <v-btn class="btn-long plein" elevation="0" dark color="#e92626" rounded @click="create()">
-                        Créer
+                    <v-btn
+                        class="btn-long plein"
+                        elevation="0"
+                        dark
+                        color="#e92626"
+                        rounded
+                        @click="editing ? edit() : create()">
+                        {{ editing ? 'MODIFIER' : 'CREER' }}
                     </v-btn>
                 </div>
             </div>
@@ -186,17 +192,21 @@ export default {
     },
     created() {},
     mounted() {
-        this.dateToday = new Date().toISOString().split('T')[0]
-
         this.parent = this.$parent.$parent.$parent
+        if (this.$route.query.id) this.setEditAct()
+
+        this.dateToday = new Date().toISOString().split('T')[0]
     },
     data: function () {
         return {
+            editing: false,
             emojis: fileEmoji,
             isPhysics: true,
             hourMenu: false,
             dateMenu: false,
             dateToday: null,
+            loading: false,
+            defaultValueLieux: null,
             form: {
                 name: '',
                 lieux: '',
@@ -215,6 +225,65 @@ export default {
         }
     },
     methods: {
+        async setEditAct() {
+            this.loading = true
+            this.editing = true
+            await this.parent.loadActivity()
+            console.log(this.parent.activity)
+            this.form = {
+                name: this.parent.activity.name,
+                lieux: this.parent.activity.lieux,
+                coord: this.parent.activity.coordlieux,
+                tags: this.parent.activity.description,
+                date: this.parent.activity.datejours,
+                hour: this.parent.activity.date.split(',')[1],
+                emoji: this.parent.activity.emoji,
+                nbMax: '6'
+            }
+            if (this.form.coord) {
+                this.defaultValueLieux = this.form.lieux
+            }
+            this.loading = false
+        },
+        edit() {
+            if (
+                this.form.name != '' &&
+                this.form.tags != '' &&
+                ((this.form.lieux && this.form.coord.lat != null && this.form.coord.lng != null) ||
+                    (this.form.lieux && this.form.coord.lat == null && this.form.coord.lng == null)) &&
+                this.form.date != '' &&
+                this.form.hour != ''
+            ) {
+                try {
+                    this.$axios
+                        .patch(`${process.env.URL}/activities/${this.$route.query.id}`, {
+                            creatorId: this.$auth.user.uuid,
+                            name: this.form.name.toUpperCase(),
+                            description: this.form.tags,
+                            lieux: this.form.lieux,
+                            date: this.form.date + ',' + this.form.hour,
+                            coordlieux: JSON.stringify(this.form.coord),
+                            lat: this.form.coord.lat,
+                            lng: this.form.coord.lng,
+                            emoji: this.form.emoji,
+                            nbMax: this.form.nbMax
+                        })
+                        .then((response) => {
+                            this.parent.goto(`/detailactivite?id=${this.$route.query.id}`)
+                        })
+                } catch (e) {
+                    this.errors.push(e)
+                }
+            } else {
+                this.parent.notify = {
+                    timeout: 3000,
+                    display: true,
+                    bgcolor: 'white',
+                    color: '#e92322',
+                    texte: 'Renseignez tout les champs correctement'
+                }
+            }
+        },
         create() {
             if (
                 this.form.name != '' &&
@@ -227,14 +296,14 @@ export default {
                 try {
                     this.$axios
                         .post(`${process.env.URL}/activities`, {
-                            creatorId: this.$auth.user.id,
+                            creatorId: this.$auth.user.uuid,
                             name: this.form.name.toUpperCase(),
                             description: this.form.tags,
                             lieux: this.form.lieux,
                             date: this.form.date + ',' + this.form.hour,
                             coordlieux: JSON.stringify(this.form.coord),
-                            lat:this.form.coord.lat,
-                            lng:this.form.coord.lng,
+                            lat: this.form.coord.lat,
+                            lng: this.form.coord.lng,
                             emoji: this.form.emoji,
                             nbMax: this.form.nbMax
                         })
@@ -258,10 +327,12 @@ export default {
         },
         async inscritalevent() {
             await this.$axios.put(`${process.env.URL}/activities/${this.idact}/user/${this.$auth.user.uuid}`).then()
-            this.$router.push('/')
+            this.parent.goto(`/detailactivite?id=${this.idact}`)
         },
+
         chargeMap(val) {
             this.form.lieux = val.formatted_address
+            this.defaultValueLieux = val.formatted_address
             this.form.coord = { lat: val.geometry.location.lat(), lng: val.geometry.location.lng() }
         }
     }

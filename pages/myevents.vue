@@ -11,6 +11,11 @@
                     <uneAct :activite="activite" :chat="true" />
                 </div>
             </div>
+            <div v-if="parent.activites.length == 0">
+                <div class="element">
+                    <div class="message">Aucune activité <br />Incrit toi à une nouvelle activité !</div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -29,7 +34,7 @@ export default {
     },
     created() {
         this.parent = this.$parent.$parent.$parent
-        if(this.$auth.user)  this.parent.loadActivitiesByUser(this.$auth.user.uuid) 
+        if (this.$auth.user) this.parent.loadActivitiesByUser(this.$auth.user.uuid)
         else this.parent.goto('login')
     },
     data: function () {
@@ -42,6 +47,14 @@ export default {
 
 <style lang="scss" scoped>
 .MyAct {
+    .message {
+        display: flex;
+        justify-content: center;
+        width: 100vw;
+        height: calc(100vh - 400px);
+        align-items: center;
+        text-align: center;
+    }
 }
 </style>
  

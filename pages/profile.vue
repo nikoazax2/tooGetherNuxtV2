@@ -9,7 +9,10 @@
                 <img height="150px" width="150px" :src="profile.avatar || profile.profileImageBlob" />
             </div>
             <div class="infos" v-if="!loading">
-                <div class="nom">{{ profile.surname }}</div>
+                <div class="nom">
+                    {{ profile.surname }}
+                    <v-icon @click.stop="parent.goto(`chat?iduser=${profile.uuid}`)"> mdi-forum-outline</v-icon>
+                </div>
                 <div class="ajout" v-if="$auth.user.uuid != profile.uuid">
                     <v-btn
                         v-if="friends && !friends.map((a) => a.uuid).includes($auth.user.uuid)"

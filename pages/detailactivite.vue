@@ -2,8 +2,23 @@
     <div class="detailactivite">
         <headerDegouline :planet="true"></headerDegouline>
         <div v-if="!chargement" class="body">
-            <div class="titre-page">{{ parent.activity.name }}</div>
+            <div class="titre-page">
+                {{ parent.activity.name }}
+            </div>
             <div class="date small-bold">{{ parent.dateFormatee(parent.activity.date) }}</div>
+            <div
+                class="edit small-bold"
+                @click="parent.goto(`/create?id=${parent.activity.uuid}`)"
+                v-if="parent.activity.creatorId == $auth.user.uuid">
+                Modifier l'activité
+                <v-icon>mdi-pencil</v-icon>
+            </div>
+            <div
+                class="edit small-bold"
+                @click="parent.goto(`chat?id=${parent.activity.uuid}`)"
+                v-if="parent.activity.creatorId == $auth.user.uuid">
+                <v-icon> mdi-forum-outline </v-icon>
+            </div>
             <div class="map">
                 <MglMap
                     class="map-visu map-detail"
@@ -108,6 +123,15 @@ export default {
         .date {
             text-align: center;
             font-weight: 650;
+        }
+        .edit {
+            margin-top: 15px;
+            width: 100%;
+            text-align: center;
+            opacity: 0.7;
+            i {
+                font-size: 18px;
+            }
         }
         .btn-valider {
             position: absolute;

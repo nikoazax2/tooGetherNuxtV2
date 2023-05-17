@@ -92,7 +92,7 @@ export default {
         this.parent = this.$parent.$parent.$parent
         setTimeout(() => {
             this.$forceUpdate()
-        }, 2000)
+        }, 100)
     },
     data: function () {
         return {

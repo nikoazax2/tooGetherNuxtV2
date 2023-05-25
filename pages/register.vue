@@ -251,6 +251,12 @@ export default {
             bottom: 0;
         }
     }
+    .photo-profile {
+        display: flex;
+        justify-content: center;
+        border-radius: 100%;
+        overflow: hidden;
+    }
 }
 </style>
  

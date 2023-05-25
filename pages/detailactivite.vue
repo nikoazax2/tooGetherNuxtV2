@@ -155,6 +155,10 @@ export default {
             .photo-profile {
                 position: inherit;
                 margin: 5px;
+                display: flex;
+                justify-content: center;
+                border-radius: 100%;
+                overflow: hidden;
             }
         }
         .map {

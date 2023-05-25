@@ -7,11 +7,11 @@
                 <div class="non-connecte" v-if="!$auth.user">
                     <div class="not-connected-btn">
                         <v-btn text dark small @click="parent.goto('login')">Connexion</v-btn>
-                        <v-btn text dark small @click="parent.goto('register')">Inscription</v-btn>
+                        <!-- <v-btn text dark small @click="parent.goto('register')">Inscription</v-btn> -->
                     </div>
                 </div>
                 <div class="connected" v-else-if="this.$auth.user.avatar || this.$auth.user.profileImageBlob">
-                    <div class="photo-profile">
+                    <div class="photo-profile-profile">
                         <img
                             height="50px"
                             width="50px"
@@ -90,9 +90,30 @@ export default {
     },
     created: function () {
         this.parent = this.$parent.$parent.$parent
+
         setTimeout(() => {
             this.$forceUpdate()
-        }, 100)
+        }, 100) 
+        if (this.$var.firstTime ) {
+            setTimeout(() => {
+                this.parent.notify = {
+                    timeout: 20000,
+                    display: true,
+                    bgcolor: 'white',
+                    color: 'rgb(233, 35, 34)',
+                    texte: `  Bienvenue sur TooGether. 
+                <br><br> Cette application à pour vocation de rencontrer de nouvelles personnes en pratiquant 
+                les activités que vous aimez. <br>  <br> Je suis un jeune développeur de Grenoble et 
+                développer cette application me prend beaucoup de mon temps libre et d\'argent. <br><br> 
+                L'application n'est pas terminée, toute donnée peut être perdue et elle peut à tout moment être indisponible. 
+                <br><br>
+                Si tu crois en ce projet, que tu veux me soutenir et voir Toogether devenir stable, tu peux
+                 me soutenir ici : <a href="https://www.papayoux.com/fr/cagnotte/toogether" target="_blank">Cagnotte </a> <br> <br> 
+                 Bonnes rencontres !`
+                }
+                this.$var.firstTime = false
+            }, 2000)
+        }
     },
     data: function () {
         return {
@@ -115,6 +136,15 @@ export default {
 
 <style lang="scss" scoped>
 .acceuil {
+    .photo-profile-profile {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        display: flex;
+        justify-content: center;
+        border-radius: 100%;
+        overflow: hidden;
+    }
     .header {
         display: inline-flex;
         width: 100%;
@@ -133,7 +163,7 @@ export default {
                 position: absolute;
                 top: 80px;
                 right: 15px;
-                justify-content: end; 
+                justify-content: end;
             }
         }
         .connected {
@@ -191,7 +221,7 @@ export default {
     }
     .planet-img-container {
         position: absolute;
-        bottom: 480px;
+        bottom: 47vh;
         img {
             height: 100vw;
         }

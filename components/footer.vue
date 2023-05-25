@@ -56,7 +56,7 @@ export default {
 </script>
 <style lang="scss">
 .lefooter {
-    position: fixed;
+    position: absolute;
     height: 35px;
     background-color: #202023;
     bottom: -2px;

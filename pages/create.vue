@@ -359,6 +359,8 @@ code {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    height: calc(100vh - 180px);
+    overflow: scroll;
 }
 .menuIsPhysic {
     border-radius: 15px;

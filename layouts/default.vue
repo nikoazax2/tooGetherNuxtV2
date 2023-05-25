@@ -1,7 +1,8 @@
 <template>
-    <v-app>
-        <v-snackbar :color="notify.bgcolor" top v-model="notify.display">
-            <div :style="'color:' + notify.color + ';'">{{ notify.texte }}</div>
+    <v-app id="app">
+        <v-snackbar :color="notify.bgcolor" :timeout="notify.timeout" top v-model="notify.display"> 
+            <v-icon class="close-mess-notify" color="grey" @click="notify.display=false">mdi-close</v-icon>
+            <div :style="'color:' + notify.color + ';'" v-html="notify.texte"/>
         </v-snackbar>
         <Nuxt v-if="mobile" ref="page"></Nuxt>
         <div class="ordi" v-else>
@@ -42,6 +43,7 @@ export default {
     },
     data() {
         return {
+            firstTime:true,
             mobile: false,
             component: 'acceuil',
             menuBurger: false,
@@ -52,7 +54,7 @@ export default {
             imgLoad: true,
             pdpLoad: true,
             friends: [],
-            detailUser:null,
+            detailUser: null,
             recherche: {
                 activite: '',
                 lieux: '',
@@ -222,9 +224,17 @@ export default {
 * {
     font-family: 'Noto Sans', sans-serif;
 }
+body {
+    overflow: hidden;
+    height: 100vh;
+}
 .corp {
     margin-top: 15vh;
     height: 80vh;
+}
+.close-mess-notify{
+    position: absolute!important;
+    right: 20px;
 }
 .btn-arrow-rounded {
     padding: 0 5px 0 10px !important;
@@ -312,15 +322,6 @@ export default {
     .v-btn__content {
         font-weight: 800;
     }
-}
-.photo-profile {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    display: flex;
-    justify-content: center;
-    border-radius: 100%;
-    overflow: hidden;
 }
 .photo-profile-libre {
     display: flex;

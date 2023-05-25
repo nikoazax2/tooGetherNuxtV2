@@ -4,7 +4,7 @@ export default {
 
     // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
     ssr: false,
-    target: 'static',
+    target: 'static', 
     // Global page headers: https://go.nuxtjs.dev/config-head
     head: {
         titleTemplate: '%s',
@@ -26,6 +26,7 @@ export default {
         baseUrl: process.env.BASE_URL || 'http://localhost:3000'
     },
     router: {
+        base: '/toogether/',
         extendRoutes(routes, resolve) {
             routes.push(
                 {

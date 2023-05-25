@@ -33,7 +33,7 @@
                                 (message.avatar || message.profileImageBlob) &&
                                 !loading)
                         ">
-                        <div class="photo-profile" @click="parent.goto(`/profile?id=${message.userUuid}`)">
+                        <div class="photo-profile photo-profile-chat" @click="parent.goto(`/profile?id=${message.userUuid}`)">
                             <img height="50px" width="50px" :src="message.avatar || message.profileImageBlob" />
                         </div>
                     </div>
@@ -203,6 +203,14 @@ html {
             font-size: 50px !important;
         }
     }
+    .photo-profile-chat {
+        position: inherit;
+        margin: 5px;
+        display: flex;
+        justify-content: center;
+        border-radius: 100%;
+        overflow: hidden;
+    }
     .header {
         position: absolute;
         width: 100%;
@@ -218,7 +226,7 @@ html {
         justify-content: end;
         overflow-y: hidden;
         .chats {
-            height: calc(100% - 170px);
+            height: calc(100% - 210px);
             overflow-y: scroll;
             flex-direction: column;
             justify-content: end;
